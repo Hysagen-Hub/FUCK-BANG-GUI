@@ -125,23 +125,11 @@ ToggleButton.MouseButton1Click:Connect(function()
 	domashniy_bew = not domashniy_bew
 	toggled = not toggled
 	if toggled then
-		if domashniy_bew == false then
-			local character = player.Character
-			character.Animate.Disabled = true
-		else
-			local character = player.Character
-			character.Animate.Disabled = false
-		end
+		local character = player.Character
+		character.Animate.Disabled = true
 		ToggleButton.Text = "Выключить анимацию"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
 		local function enableCustomAnimation(humanoid)
-	if domashniy_bew == false then
-		local character = player.Character
-		character.Animate.Disabled = true
-	else
-		local character = player.Character
-		character.Animate.Disabled = false
-	end
 	
 	if animTrack then
 		animTrack:Stop()
@@ -158,13 +146,8 @@ ToggleButton.MouseButton1Click:Connect(function()
 end
 		enableCustomAnimation(humanoid)
 	else
-		if domashniy_bew == false then
-			local character = player.Character
-			character.Animate.Disabled = false
-		else
-			local character = player.Character
-			character.Animate.Disabled = true
-		end
+		local character = player.Character
+		character.Animate.Disabled = false
 		ToggleButton.Text = "Включить анимацию"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 		local function disableCustomAnimation(humanoid)
