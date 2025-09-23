@@ -1,0 +1,200 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local guiName = "CustomAnimationGui"
+local existingGui = playerGui:FindFirstChild(guiName)
+if existingGui then existingGui:Destroy() end
+
+local ScreenGui = Instance.new("ScreenGui", playerGui)
+ScreenGui.Name = guiName
+ScreenGui.ResetOnSpawn = false
+
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 300, 0, 120)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -60)
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Frame.Active = true
+Frame.Draggable = true
+
+local Title = Instance.new("TextLabel", Frame)
+Title.Size = UDim2.new(1, 0, 0, 25)
+Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Title.Text = "ANIMATION FUCKBANG"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 18
+
+local CloseButton = Instance.new("TextButton", Frame)
+CloseButton.Size = UDim2.new(0, 30, 0, 25)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.Text = "X"
+CloseButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+CloseButton.TextColor3 = Color3.new(1,1,1)
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.TextSize = 18
+CloseButton.MouseButton1Click:Connect(function()
+	ScreenGui.Enabled = false
+end)
+
+local SpeedLabel = Instance.new("TextLabel", Frame)
+SpeedLabel.Position = UDim2.new(0, 10, 0, 30)
+SpeedLabel.Size = UDim2.new(0, 280, 0, 25)
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.TextColor3 = Color3.new(1,1,1)
+SpeedLabel.Font = Enum.Font.SourceSans
+SpeedLabel.TextSize = 18
+SpeedLabel.Text = "Скорость: 500"
+local SliderBg = Instance.new("Frame", Frame)
+SliderBg.Position = UDim2.new(0, 10, 0, 60)
+SliderBg.Size = UDim2.new(0, 280, 0, 20)
+SliderBg.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+
+local Fill = Instance.new("Frame", SliderBg)
+Fill.Size = UDim2.new(0.5, 0, 1, 0)
+Fill.BackgroundColor3 = Color3.fromRGB(150, 150, 250)
+
+local Handle = Instance.new("Frame", SliderBg)
+Handle.Size = UDim2.new(0, 20, 1, 0)
+Handle.Position = UDim2.new(0.5, -10, 0, 0)
+Handle.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+
+local dragging = false
+local speedValue = 500
+
+local function updateSlider(input)
+	local pos = input.Position.X - SliderBg.AbsolutePosition.X
+	pos = math.clamp(pos, 0, SliderBg.AbsoluteSize.X)
+	local percent = pos / SliderBg.AbsoluteSize.X
+	Fill.Size = UDim2.new(percent, 0, 1, 0)
+	Handle.Position = UDim2.new(percent, -10, 0, 0)
+	speedValue = math.floor(percent*999)+1
+	SpeedLabel.Text = "Скорость: "..speedValue
+end
+
+Handle.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		updateSlider(input)
+	end
+end)
+Handle.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
+SliderBg.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		updateSlider(input)
+	end
+end)
+SliderBg.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		updateSlider(input)
+	end
+end)
+
+local ToggleButton = Instance.new("TextButton", Frame)
+ToggleButton.Position = UDim2.new(0, 10, 0, 90)
+ToggleButton.Size = UDim2.new(0, 280, 0, 25)
+ToggleButton.Text = "Включить анимацию"
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+ToggleButton.TextColor3 = Color3.new(1,1,1)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.TextSize = 20
+
+local animationId = "837011741"
+local animTrack = nil
+local toggled = false
+
+local function stopAllOtherAnimations()
+	for _, track in pairs(player.Character.Humanoid:GetPlayingAnimationTracks()) do
+		if track ~= animTrack then
+			track:Stop()
+		end
+	end
+end
+
+domashniy_bew = true
+
+ToggleButton.MouseButton1Click:Connect(function()
+	local character = player.Character
+	if not character then return end
+	local humanoid = character:FindFirstChildWhichIsA("Humanoid")
+	if not humanoid then return end
+	domashniy_bew = not domashniy_bew
+	toggled = not toggled
+	if toggled then
+		if domashniy_bew == false then
+			local character = player.Character
+			character.Animate.Disabled = true
+		else
+			local character = player.Character
+			character.Animate.Disabled = false
+		end
+		ToggleButton.Text = "Выключить анимацию"
+		ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+		local function enableCustomAnimation(humanoid)
+	if domashniy_bew == false then
+		local character = player.Character
+		character.Animate.Disabled = true
+	else
+		local character = player.Character
+		character.Animate.Disabled = false
+	end
+	
+	if animTrack then
+		animTrack:Stop()
+		animTrack = nil
+	end
+	local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator",5)
+	if not animator then return end
+	local animation = Instance.new("Animation")
+	animation.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+	animTrack = animator:LoadAnimation(animation)
+	animTrack:Play()
+	animTrack:AdjustSpeed(speedValue / 50)
+	stopAllOtherAnimations()
+end
+		enableCustomAnimation(humanoid)
+	else
+		if domashniy_bew == false then
+			local character = player.Character
+			character.Animate.Disabled = true
+		else
+			local character = player.Character
+			character.Animate.Disabled = false
+		end
+		ToggleButton.Text = "Включить анимацию"
+		ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+		local function disableCustomAnimation(humanoid)
+	if animTrack then
+		animTrack:Stop()
+		animTrack = nil
+	end
+end
+		disableCustomAnimation(humanoid)
+	end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if toggled and animTrack then
+		animTrack:AdjustSpeed(speedValue / 50)
+		SpeedLabel.Text = "Скорость: "..speedValue
+	end
+end)
+
+local function onCharacterAdded(char)
+	toggled = false
+	ToggleButton.Text = "Включить анимацию"
+	ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+	if animTrack then
+		animTrack:Stop()
+		animTrack = nil
+	end
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+if player.Character then onCharacterAdded(player.Character) 
+	domashniy_bew = false
+end
