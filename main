@@ -25,6 +25,17 @@ Title.TextColor3 = Color3.new(1,1,1)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 18
 
+local tgbutton = Instance.new("TextButton", Frame)
+tgbutton.Size = UDim2.new(0, 20, 0, 20)
+tgbutton.Position = UDim2.new(0, 5, 0, 5)
+tgbutton.Text = "TG"
+tgbutton.BackgroundColor3 = Color3.fromRGB(6, 243, 255)
+tgbutton.TextColor3 = Color3.new(0.415686, 0.415686, 0.415686)
+tgbutton.Font = Enum.Font.SourceSansBold
+tgbutton.TextSize = 14
+local corner = Instance.new("UICorner", tgbutton)
+corner.CornerRadius = UDim.new(0, 10)
+
 local CloseButton = Instance.new("TextButton", Frame)
 CloseButton.Size = UDim2.new(0, 30, 0, 25)
 CloseButton.Position = UDim2.new(1, -30, 0, 0)
@@ -34,7 +45,8 @@ CloseButton.TextColor3 = Color3.new(1,1,1)
 CloseButton.Font = Enum.Font.SourceSansBold
 CloseButton.TextSize = 18
 CloseButton.MouseButton1Click:Connect(function()
-	ScreenGui.Enabled = false
+	ScreenGui:Destroy()
+	script:Destroy()
 end)
 
 local SpeedLabel = Instance.new("TextLabel", Frame)
@@ -181,3 +193,7 @@ player.CharacterAdded:Connect(onCharacterAdded)
 if player.Character then onCharacterAdded(player.Character) 
 	domashniy_bew = false
 end
+
+tgbutton.MouseButton1Click:Connect(function()
+	setclipboard("https://t.me/HysogenScripts")
+end)
