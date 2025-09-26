@@ -44,7 +44,7 @@ SpeedLabel.BackgroundTransparency = 1
 SpeedLabel.TextColor3 = Color3.new(1,1,1)
 SpeedLabel.Font = Enum.Font.SourceSans
 SpeedLabel.TextSize = 18
-SpeedLabel.Text = "Скорость: 500"
+SpeedLabel.Text = "Speed: 500"
 local SliderBg = Instance.new("Frame", Frame)
 SliderBg.Position = UDim2.new(0, 10, 0, 60)
 SliderBg.Size = UDim2.new(0, 280, 0, 20)
@@ -69,7 +69,7 @@ local function updateSlider(input)
 	Fill.Size = UDim2.new(percent, 0, 1, 0)
 	Handle.Position = UDim2.new(percent, -10, 0, 0)
 	speedValue = math.floor(percent*999)+1
-	SpeedLabel.Text = "Скорость: "..speedValue
+	SpeedLabel. = "Скорость: "..speedValue
 end
 
 Handle.InputBegan:Connect(function(input)
@@ -97,7 +97,7 @@ end)
 local ToggleButton = Instance.new("TextButton", Frame)
 ToggleButton.Position = UDim2.new(0, 10, 0, 90)
 ToggleButton.Size = UDim2.new(0, 280, 0, 25)
-ToggleButton.Text = "Включить анимацию"
+ToggleButton.Text = "Turn On"
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 ToggleButton.TextColor3 = Color3.new(1,1,1)
 ToggleButton.Font = Enum.Font.SourceSansBold
@@ -127,7 +127,7 @@ ToggleButton.MouseButton1Click:Connect(function()
 	if toggled then
 		local character = player.Character
 		character.Animate.Disabled = true
-		ToggleButton.Text = "Выключить анимацию"
+		ToggleButton.Text = "Turn off"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
 		local function enableCustomAnimation(humanoid)
 	
@@ -148,7 +148,7 @@ end
 	else
 		local character = player.Character
 		character.Animate.Disabled = false
-		ToggleButton.Text = "Включить анимацию"
+		ToggleButton.Text = "Turn on"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 		local function disableCustomAnimation(humanoid)
 	if animTrack then
@@ -163,13 +163,13 @@ end)
 game:GetService("RunService").RenderStepped:Connect(function()
 	if toggled and animTrack then
 		animTrack:AdjustSpeed(speedValue / 50)
-		SpeedLabel.Text = "Скорость: "..speedValue
+		SpeedLabel.Text = "Speed: "..speedValue
 	end
 end)
 
 local function onCharacterAdded(char)
 	toggled = false
-	ToggleButton.Text = "Включить анимацию"
+	ToggleButton.Text = "Turn on"
 	ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 	if animTrack then
 		animTrack:Stop()
