@@ -69,7 +69,7 @@ local function updateSlider(input)
 	Fill.Size = UDim2.new(percent, 0, 1, 0)
 	Handle.Position = UDim2.new(percent, -10, 0, 0)
 	speedValue = math.floor(percent*999)+1
-	SpeedLabel. = "Speed: "..speedValue
+	SpeedLabel.Text = "Speed: "..speedValue
 end
 
 Handle.InputBegan:Connect(function(input)
@@ -130,20 +130,20 @@ ToggleButton.MouseButton1Click:Connect(function()
 		ToggleButton.Text = "Turn off"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
 		local function enableCustomAnimation(humanoid)
-	
-	if animTrack then
-		animTrack:Stop()
-		animTrack = nil
-	end
-	local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator",5)
-	if not animator then return end
-	local animation = Instance.new("Animation")
-	animation.AnimationId = "http://www.roblox.com/asset/?id=742638445"
-	animTrack = animator:LoadAnimation(animation)
-	animTrack:Play()
-	animTrack:AdjustSpeed(speedValue / 50)
-	stopAllOtherAnimations()
-end
+
+			if animTrack then
+				animTrack:Stop()
+				animTrack = nil
+			end
+			local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator",5)
+			if not animator then return end
+			local animation = Instance.new("Animation")
+			animation.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+			animTrack = animator:LoadAnimation(animation)
+			animTrack:Play()
+			animTrack:AdjustSpeed(speedValue / 50)
+			stopAllOtherAnimations()
+		end
 		enableCustomAnimation(humanoid)
 	else
 		local character = player.Character
@@ -151,11 +151,11 @@ end
 		ToggleButton.Text = "Turn on"
 		ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
 		local function disableCustomAnimation(humanoid)
-	if animTrack then
-		animTrack:Stop()
-		animTrack = nil
-	end
-end
+			if animTrack then
+				animTrack:Stop()
+				animTrack = nil
+			end
+		end
 		disableCustomAnimation(humanoid)
 	end
 end)
