@@ -69,7 +69,7 @@ local function updateSlider(input)
 	Fill.Size = UDim2.new(percent, 0, 1, 0)
 	Handle.Position = UDim2.new(percent, -10, 0, 0)
 	speedValue = math.floor(percent*999)+1
-	SpeedLabel. = "Скорость: "..speedValue
+	SpeedLabel. = "Speed: "..speedValue
 end
 
 Handle.InputBegan:Connect(function(input)
